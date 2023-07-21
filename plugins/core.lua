@@ -1,25 +1,52 @@
+vim.g.term = 'powershell'
+
 return {
   -- customize alpha options
   {
     "goolord/alpha-nvim",
-    opts = function(_, opts)
-      -- customize the dashboard header
-      opts.section.header.val = {
-      "            ███    ██  ██████  ████████           ",
-      "            ████   ██ ██    ██    ██              ",
-      "            ██ ██  ██ ██    ██    ██              ",
-      "            ██  ██ ██ ██    ██    ██              ",
-      "            ██   ████  ██████     ██              ",
-      "                                                  ",
-      "                                                  ",
-      "██    ██ ███████  ██████  ██████  ██████  ███████ ",
-      "██    ██ ██      ██      ██    ██ ██   ██ ██      ",
-      "██    ██ ███████ ██      ██    ██ ██   ██ █████   ",
-      " ██  ██       ██ ██      ██    ██ ██   ██ ██      ",
-      "  ████   ███████  ██████  ██████  ██████  ███████ ",
-      "                                                 ",
+    opts = function()
+      require("alpha")
+      require("alpha.term")
+      local dashboard = require("alpha.themes.dashboard")
+      dashboard.section.buttons.val = {
+        dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
+        dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
+        dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
+        dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
+        dashboard.button("s", "勒" .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+        dashboard.button("l", "鈴" .. " Lazy", ":Lazy<CR>"),
+        dashboard.button("q", " " .. " Quit", ":qa<CR>"),
       }
-      return opts
+      for _, button in ipairs(dashboard.section.buttons.val) do
+        button.opts.hl = "AlphaButtons"
+        button.opts.hl_shortcut = "AlphaShortcut"
+      end
+      dashboard.section.footer.opts.hl = "Type"
+      dashboard.section.header.opts.hl = "AlphaShortcut"
+      dashboard.section.buttons.opts.hl = "AlphaButtons"
+  
+      local width = 46
+      local height = 25 -- two pixels per vertical space
+      dashboard.section.terminal.command = "C:\\Users\\user\\AppData\\Local\\nvim\\lua\\user\\plugins\\test.ps1"
+      dashboard.section.terminal.width = width
+      dashboard.section.terminal.height = height
+      dashboard.section.terminal.opts.redraw = true
+  
+      dashboard.section.header.val = ""
+  
+      dashboard.config.layout = {
+        { type = "padding", val = 1 },
+        dashboard.section.terminal,
+        { type = "padding", val = 5 },
+        dashboard.section.header,
+        { type = "padding", val = 2 },
+        dashboard.section.buttons,
+        { type = "padding", val = 1 },
+        dashboard.section.footer,
+      }
+  
+      return dashboard
     end,
   },
   -- You can disable default plugins as follows:

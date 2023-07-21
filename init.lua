@@ -16,7 +16,6 @@ return {
       --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
     },
   },
-
   -- Set colorscheme to use
   colorscheme = "catppuccin",
 
@@ -81,6 +80,15 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
+    if vim.fn.executable "pwsh" == 1 then
+      vim.opt.shell = "pwsh"
+      vim.opt.shellcmdflag =
+      "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+      vim.opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
+      vim.opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+      vim.opt.shellquote = ""
+      vim.opt.shellxquote = ""
+    end
     -- Set up custom filetypes
     -- vim.filetype.add {
     --   extension = {

@@ -14,7 +14,7 @@ return {
       name = "catppuccin",
       config = function()
         require("catppuccin").setup {
-          flavour = "latte",
+          flavour = "frappe",
         }
       end,
     },
