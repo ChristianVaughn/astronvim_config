@@ -14,8 +14,6 @@ return {
         dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
         dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
         dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-        dashboard.button("s", "勒" .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
-        dashboard.button("l", "鈴" .. " Lazy", ":Lazy<CR>"),
         dashboard.button("q", " " .. " Quit", ":qa<CR>"),
       }
       for _, button in ipairs(dashboard.section.buttons.val) do
@@ -28,7 +26,7 @@ return {
   
       local width = 46
       local height = 25 -- two pixels per vertical space
-      dashboard.section.terminal.command = "C:\\Users\\user\\AppData\\Local\\nvim\\lua\\user\\plugins\\test.ps1"
+      dashboard.section.terminal.command = "~/.config/nvim/lua/user/plugins/test.sh"
       dashboard.section.terminal.width = width
       dashboard.section.terminal.height = height
       dashboard.section.terminal.opts.redraw = true
